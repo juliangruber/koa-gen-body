@@ -30,7 +30,7 @@ while (data = yield genStream()) {
 console.log('done reading');
 ```
 
-  To read an abort:
+  To read and abort:
 
 ```js
 console.log('data: %s', yield genStream());
