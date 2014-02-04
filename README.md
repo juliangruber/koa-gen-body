@@ -10,6 +10,35 @@
   For more rationale see https://github.com/koajs/koa/issues/207 and
   https://github.com/koajs/koa/pull/208.
 
+## Semantics
+
+  A readable generator stream is simply a generator function.
+  
+  On each invokation it should return a `String` or `Buffer` of data, or a falsy
+  value when there's nothing more to be read and the stream is done.
+  
+  It may take an `end` argument, which when `true` tells the stream to clean up
+  its underlying resources, like tcp connections or file descriptors.
+  
+  To read from a generator stream:
+  
+```js
+var data;
+while (data = yield genStream()) {
+  console.log('data: %s', data);
+}
+console.log('done reading');
+```
+
+  To read an abort:
+
+```js
+console.log('data: %s', yield genStream());
+console.log('data: %s', yield genStream());
+console.log('last data: %s', yield genStream(true));
+console.log('done reading');
+```
+
 ## Example
 
 ```js
